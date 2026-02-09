@@ -1,4 +1,5 @@
 import java.util.Scanner;
+// Call Target Calculator
 
 public class CallTargetCalculator {
 
