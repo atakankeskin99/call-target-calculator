@@ -1,7 +1,7 @@
 ### IntelliJ IDEA ###
 out/
-!**/src/main/**/out/
-!**/src/test/**/out/
+!**/src/main/**/
+!**/src/test/**/
 .kotlin
 
 ### Eclipse ###
@@ -28,3 +28,7 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+# ===== IntelliJ IDEA (explicit clean-up) =====
+.idea/
+*.iml
+
