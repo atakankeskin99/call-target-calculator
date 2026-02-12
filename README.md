@@ -1,4 +1,8 @@
 # Call Target Calculator
+![Java](https://img.shields.io/badge/Java-JDK%2017-orange)
+![Type](https://img.shields.io/badge/type-Console-lightgrey)
+![Status](https://img.shields.io/badge/status-learning%20project-lightgrey)
+
 
 A simple Java console application that helps call center agents track daily call targets and calculate the required hourly pace to reach the goal.
 
