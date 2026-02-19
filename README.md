@@ -35,3 +35,19 @@ Compile and run from the project root:
 ```bash
 javac src/CallTargetCalculator.java
 java -cp src CallTargetCalculator
+
+```
+
+
+
+
+## Other Implementations
+This project also exists in different forms:
+
+- 🖥 **Java GUI version**  
+  https://github.com/atakankeskin99/CallTargetCalculatorGUI
+
+- 🌐 **Web-based version**  
+  https://github.com/atakankeskin99/call-target-calculator-web
+
+Each version shares the same core idea but explores different interfaces and technologies.
