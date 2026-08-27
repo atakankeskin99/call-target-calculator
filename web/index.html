@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Call Target Calculator</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; }
+    .container { max-width: 820px; margin: 0 auto; }
+    .card { border: 1px solid #ddd; border-radius: 12px; padding: 16px; }
+    .grid { display: grid; grid-template-columns: 1fr 280px; gap: 12px 16px; align-items: center; }
+    label { font-weight: 600; }
+    input { width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 10px; font-size: 14px; }
+    button { padding: 10px 14px; border: 1px solid #ccc; border-radius: 10px; font-weight: 700; cursor: pointer; }
+    .row { display: flex; gap: 10px; align-items: center; margin-top: 12px; flex-wrap: wrap; }
+    .muted { color: #666; font-size: 13px; margin-top: 8px; }
+    .output { width: 100%; min-height: 190px; margin-top: 12px; padding: 12px; border: 1px solid #ccc; border-radius: 10px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; white-space: pre-wrap; }
+    .pill { display:inline-block; padding: 4px 10px; border:1px solid #ddd; border-radius: 999px; font-size: 12px; color:#444; }
+    .error { display:none; margin-top: 10px; padding: 10px 12px; border-radius: 10px; border: 1px solid #f1c0c0; background: #fff2f2; color: #8a1f1f; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Call Target Calculator</h1>
+    <div class="muted">
+      <span class="pill">Web version</span>
+      <span class="pill">Rule-based</span>
+      <span class="pill">Learning project</span>
+    </div>
+
+    <div class="card" style="margin-top:14px;">
+      <div class="grid">
+        <label for="loginHours">Logged-in hours today</label>
+        <input id="loginHours" type="number" min="0" max="24" step="0.25" inputmode="decimal" placeholder="e.g., 4 or 4.5" />
+
+        <label for="breakMinutes">Total break minutes</label>
+        <input id="breakMinutes" type="number" min="0" max="600" step="5" inputmode="numeric" placeholder="e.g., 15" />
+
+        <label for="callsTaken">Calls taken so far</label>
+        <input id="callsTaken" type="number" min="0" max="9999" step="1" inputmode="numeric" placeholder="e.g., 56" />
+      </div>
+
+      <div class="row">
+        <button id="btnCalc" type="button">Calculate</button>
+        <button id="btnReset" type="button">Reset</button>
+        <div class="muted" id="constants"></div>
+      </div>
+
+      <div id="errorBox" class="error"></div>
+      <textarea id="output" class="output" readonly></textarea>
+    </div>
+
+    <p class="muted">
+      Notes: Daily target = 200 calls, daily net working time = 8.5 hours (same logic as Java/WinForms).
+    </p>
+  </div>
+
+  <script>
+    // Constants (same as your Java/C# versions)
+    const DAILY_TARGET_CALLS = 200;
+    const DAILY_NET_HOURS = 8.5;
+
+    const elLogin = document.getElementById("loginHours");
+    const elBreak = document.getElementById("breakMinutes");
+    const elCalls = document.getElementById("callsTaken");
+    const elOut = document.getElementById("output");
+    const elConst = document.getElementById("constants");
+    const elErr = document.getElementById("errorBox");
+
+    elConst.textContent = `Daily target: ${DAILY_TARGET_CALLS} calls • Daily net: ${DAILY_NET_HOURS} hours`;
+
+    function showError(message, focusEl) {
+      elErr.textContent = message;
+      elErr.style.display = "block";
+      if (focusEl) focusEl.focus();
+    }
+
+    function clearError() {
+      elErr.textContent = "";
+      elErr.style.display = "none";
+    }
+
+    function parseNumberSmart(value) {
+      // Accept both "4.5" and "4,5"
+      const v = (value ?? "").trim().replace(",", ".");
+      if (v === "") return NaN;
+      return Number(v);
+    }
+
+    function parseIntSmart(value) {
+      const n = parseNumberSmart(value);
+      if (!Number.isFinite(n)) return NaN;
+      const i = Math.trunc(n);
+      // Reject decimals like 12.5
+      if (n !== i) return NaN;
+      return i;
+    }
+
+    function fmt2(n) {
+      return Number.isFinite(n) ? n.toFixed(2) : "0.00";
+    }
+
+    function calculate() {
+      clearError();
+
+      const loginHours = parseNumberSmart(elLogin.value);
+      const breakMinutes = parseNumberSmart(elBreak.value);
+      const callsTaken = parseIntSmart(elCalls.value);
+
+      if (!Number.isFinite(loginHours) || loginHours <= 0) {
+        showError("Please enter a valid positive number for logged-in hours.", elLogin);
+        return;
+      }
+      if (!Number.isFinite(breakMinutes) || breakMinutes < 0) {
+        showError("Please enter a valid number (0 or greater) for break minutes.", elBreak);
+        return;
+      }
+      if (!Number.isFinite(callsTaken) || callsTaken < 0) {
+        showError("Please enter a valid whole number (0 or greater) for calls taken.", elCalls);
+        return;
+      }
+
+      let netWorkedHours = loginHours - (breakMinutes / 60.0);
+      if (netWorkedHours < 0) netWorkedHours = 0;
+
+      let remainingNetHours = DAILY_NET_HOURS - netWorkedHours;
+      if (remainingNetHours < 0) remainingNetHours = 0;
+
+      const remainingCalls = DAILY_TARGET_CALLS - callsTaken;
+
+      let out = "";
+      out += "--- Summary ---\n";
+      out += `Daily net time (fixed): ${fmt2(DAILY_NET_HOURS)} hours\n`;
+      out += `Net worked so far:       ${fmt2(netWorkedHours)} hours\n`;
+      out += `Remaining net time:      ${fmt2(remainingNetHours)} hours\n`;
+      out += `Daily call target:       ${DAILY_TARGET_CALLS}\n`;
+      out += `Calls taken:             ${callsTaken}\n`;
+
+      // Target achieved / exceeded
+      if (remainingCalls <= 0) {
+        out += `Remaining calls:         0 (Target exceeded by ${Math.abs(remainingCalls)} calls)\n`;
+        out += "Status:                  Bonus mode 🚀\n";
+        elOut.value = out;
+        return;
+      }
+
+      out += `Remaining calls:         ${remainingCalls}\n`;
+
+      // No time left but still calls remaining
+      if (remainingNetHours === 0) {
+        out += "Remaining net time is 0. Required pace cannot be calculated.\n";
+        elOut.value = out;
+        return;
+      }
+
+      const requiredCallsPerHour = remainingCalls / remainingNetHours;
+      out += `Required pace:           ${fmt2(requiredCallsPerHour)} calls/hour\n`;
+
+      elOut.value = out;
+    }
+
+    function resetAll() {
+      clearError();
+      elLogin.value = "";
+      elBreak.value = "";
+      elCalls.value = "";
+      elOut.value = "";
+      elLogin.focus();
+    }
+
+    document.getElementById("btnCalc").addEventListener("click", calculate);
+    document.getElementById("btnReset").addEventListener("click", resetAll);
+
+    [elLogin, elBreak, elCalls].forEach(el => {
+      el.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") calculate();
+      });
+    });
+  </script>
+</body>
+</html>
