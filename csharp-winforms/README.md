@@ -1,194 +1,148 @@
-# Call Target Calculator (WinForms GUI)
+# Call Target Calculator — C# WinForms
+
 ![C#](https://img.shields.io/badge/C%23-WinForms-blue)
 ![.NET](https://img.shields.io/badge/.NET-8.0-purple)
-![Status](https://img.shields.io/badge/status-learning%20project-lightgrey)
+![Type](https://img.shields.io/badge/interface-Desktop%20GUI-lightgrey)
 
-A Windows Forms (C#) application that calculates the required call pace to reach a fixed daily performance target.  
+The desktop GUI implementation of the Call Target Calculator, built with C# and Windows Forms.
 
-This project is the GUI implementation of my original Java console version.
+This version adapts the original Java console application's calculation logic to an event-driven graphical interface.
 
+## Features
 
+### Input
 
----
+* Logged-in hours
+* Break minutes
+* Calls taken so far
 
-## 📌 Based On
+### Calculates
 
-This project is implemented based on my original Java console version:
+* Net worked hours
+* Remaining working hours
+* Remaining calls
+* Required calls per hour
 
-👉 https://github.com/atakankeskin99/call-target-calculator
+Additional features include:
 
-The core calculation logic has been adapted from Java to C# and redesigned with a graphical user interface using WinForms.
+* Input validation with user-friendly error messages
+* Read-only structured output
+* Target-completed handling
+* Windows Forms graphical interface
 
----
+## Core Calculation Logic
 
-## 🚀 Features
+The application currently uses:
 
-- Input:
-  - Login hours
-  - Break minutes
-  - Calls taken so far
-- Calculates:
-  - Net worked hours
-  - Remaining working hours
-  - Remaining calls
-  - Required calls per hour
-- Input validation with user-friendly error messages
-- Read-only output panel
+```text
+Daily target: 200 calls
+Daily net working time: 8.5 hours
+```
 
-## 🧮 Core Calculation Logic
+Calculation:
 
-- Daily target: 200 calls
-- Daily net working hours: 8.5 hours
-- Net worked time = Login hours − (Break minutes / 60)
-- Required pace = Remaining calls / Remaining hours
-  
----
+```text
+Net worked hours =
+    Login hours - (Break minutes / 60)
 
-## 🛠 Tech Stack
+Remaining net hours =
+    Daily net hours - Net worked hours
 
-- C#
-- .NET
-- Windows Forms (WinForms)
+Remaining calls =
+    Daily target - Calls taken
 
----
+Required pace =
+    Remaining calls / Remaining net hours
+```
 
-## 🎯 Purpose
+## Tech Stack
 
-This project is part of my learning journey in:
+* C#
+* .NET 8
+* Windows Forms (WinForms)
 
-- Object-Oriented Programming
-- Desktop Application Development
-- Translating business logic between languages (Java → C#)
-- Building GUI-based tools from console applications
+## Project Structure
 
+```text
+csharp-winforms/
+├── CallTargetCalculatorGUI.slnx
+├── CallTargetCalculatorGUI/
+├── images/
+└── README.md
+```
 
-<h2>🖼️ Application Screenshot</h2>
+## Application Screenshot
 
 <p align="center">
-  <img src="images/screenshot.png" alt="Call Target Calculator GUI Screenshot" width="800" />
+  <img src="images/screenshot.png" alt="Call Target Calculator WinForms Screenshot" width="800" />
   <br/>
-  <em>Call Target Calculator — WinForms GUI</em>
+  <em>Call Target Calculator — C# WinForms</em>
 </p>
 
+## Purpose
 
+The main goal of this implementation was to take the business logic from the original Java console application and adapt it to a desktop GUI environment.
 
+This provided practice with:
 
+* Event-driven programming
+* Windows Forms controls
+* Form-based user input
+* Input validation
+* Translating logic between Java and C#
+* Desktop application development
 
-  ## 🧠 Mini Case Study — Call Target Calculator (WinForms)
+## Design
 
-### 📌 Problem
+The application uses Windows Forms controls for input and output.
 
-During a working day, it can be difficult to track performance pace relative to a fixed daily target.
+User input is validated using:
 
-This project provides a simple tool that calculates the required call rate based on logged-in hours, break time, and calls completed so far.
+* `double.TryParse`
+* `int.TryParse`
 
+The calculation is triggered through a button click event, demonstrating the transition from sequential console execution to event-driven application flow.
 
-This project provides a simple tool that calculates the required call rate based on logged-in hours, break time, and calls completed so far.
+## What I Learned
 
+Through this implementation I practiced:
 
----
+* Creating Windows Forms applications
+* Wiring controls to event handlers
+* Handling graphical user input
+* Providing validation feedback with `MessageBox`
+* Working with the WinForms Designer
+* Translating existing Java logic into C#
+* Debugging GUI-related issues
 
-### 🎯 Project Goals
+## Current Limitations
 
-- Translate an existing Java console application into a C# WinForms desktop application  
-- Preserve core business logic while changing the presentation layer  
-- Practice GUI-based user interaction and event-driven programming  
-- Implement basic input validation in a desktop environment  
-- Keep the structure clean and beginner-friendly  
+The application intentionally keeps the calculation model simple.
 
-This project is intentionally **learning-focused**, not production-grade.
+Current limitations include:
 
----
+* Fixed daily target
+* Fixed daily net working hours
+* No persistent data storage
+* Calculation logic currently resides in the form event handler
+* No automated tests
 
-### 🛠️ Approach & Design Decisions
+## Possible Improvements
 
-- Built using:
-  - C#
-  - .NET
-  - Windows Forms (WinForms)
+Future improvements could include:
 
-- The core logic was adapted from my original Java console version:  
-  👉 https://github.com/atakankeskin99/call-target-calculator
+* Extract calculation logic into a separate service class
+* Add unit tests with xUnit or NUnit
+* Make the daily target configurable
+* Make shift length configurable
+* Improve UI layout and spacing
+* Add additional desktop UI features
 
-- Constants used:
-  - Daily target calls: `200`
-  - Daily net working hours: `8.5`
+## Other Implementations
 
-- Input validation implemented using:
-  - `double.TryParse`
-  - `int.TryParse`
-  - `MessageBox` feedback for invalid input
+This project is also implemented as:
 
-- Output panel:
-  - Multiline
-  - Read-only
-  - Structured for clarity
+* **Java Console** — [`../java-console`](../java-console)
+* **Web Application** — [`../web`](../web)
 
-The main architectural goal was separating:
-
-- UI layer (WinForms controls)
-- Business logic (calculation logic inside event handler)
-
----
-
-### 📚 What I Learned
-
-- How event-driven programming works in WinForms  
-- How to wire UI controls to backend logic (`Click` events)  
-- Differences between console-based and GUI-based input handling  
-- Translating logic between programming languages (Java → C#)  
-- Debugging designer-related issues in WinForms  
-- Structuring GitHub repositories for incremental improvement  
-
----
-
-### ⚠️ Limitations
-
-This application is intentionally simple.
-
-It does not include:
-
-- Dynamic shift lengths
-- Configurable daily targets
-- Persistent data storage
-- Advanced validation rules
-- Unit testing (yet)
-
-The UI is functional but minimal.
-
----
-
-### 🚀 Possible Improvements
-
-- Extract business logic into a separate service class  
-- Add unit tests (xUnit / NUnit)  
-- Make daily targets configurable  
-- Improve UI layout and spacing  
-- Add dark mode styling  
-- Convert to WPF or a web-based version  
-
----
-
-### ✅ Why This Project Matters
-
-Although simple, this project demonstrates:
-
-- Business logic implementation  
-- Cross-language adaptation (Java → C#)  
-- Basic desktop application architecture  
-- Iterative development mindset  
-
-It represents a practical step in transitioning from console-based programming to GUI application development.
-
-This represents another step forward in my learning journey.
-
----
-
-## Other Implementation
-This project also exists in different forms:
-
-- 🌐 **Web-based version**  
-  https://github.com/atakankeskin99/call-target-calculator-web
-
-
-
+All implementations are maintained together in the main **Call Target Calculator** repository.
