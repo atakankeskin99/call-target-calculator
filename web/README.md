@@ -1,153 +1,156 @@
-# Call Target Calculator — Web Version
+# Call Target Calculator — Web
 
 ![HTML5](https://img.shields.io/badge/HTML5-Structure-orange)
 ![CSS3](https://img.shields.io/badge/CSS3-Styling-blue)
 ![JavaScript](https://img.shields.io/badge/JavaScript-Vanilla-yellow)
-![Status](https://img.shields.io/badge/status-learning%20project-lightgrey)
-![Deployment](https://img.shields.io/badge/deployed-GitHub%20Pages-blue)
+![Type](https://img.shields.io/badge/interface-Browser-lightgrey)
 
-A browser-based implementation of the Call Target Calculator built with pure HTML, CSS, and Vanilla JavaScript.
+The browser-based implementation of the Call Target Calculator, built with pure HTML, CSS, and Vanilla JavaScript.
 
-This version runs entirely in the browser and is deployed using GitHub Pages.
+This version adapts the same core calculation logic used in the Java console and C# WinForms implementations to a browser environment.
 
----
+## Features
 
-## 🌐 Live Demo
+### Input
 
-👉 https://atakankeskin99.github.io/call-target-calculator-web/
+* Logged-in hours
+* Break minutes
+* Calls taken so far
 
----
+### Calculates
 
-## 🧠 Multi-Platform Implementation
+* Net worked hours
+* Remaining net hours
+* Remaining calls
+* Required calls per hour
 
-This project is part of a multi-version learning progression.
+Additional features include:
 
-Same core logic, different environments:
+* Client-side input validation
+* Support for both `4.5` and `4,5` number formats
+* Target-completed handling
+* Reset button
+* Enter-key calculation
+* Fully client-side execution
+* No backend required
 
-- 🖥 Java Console Version  
-  https://github.com/atakankeskin99/call-target-calculator  
+## Core Calculation
 
-- 🪟 C# WinForms GUI Version  
-  https://github.com/atakankeskin99/CallTargetCalculatorGUI  
+The application currently uses:
 
-- 🌐 Web Version (this project)
+```text
+Daily target: 200 calls
+Daily net working time: 8.5 hours
+```
 
-The business logic remains consistent across all versions.  
-Only the presentation layer changes.
+Calculation:
 
----
+```text
+Net worked hours =
+    Login hours - (Break minutes / 60)
 
-## 🚀 Features
+Remaining net hours =
+    Daily net hours - Net worked hours
 
-**Input:**
+Remaining calls =
+    Daily target - Calls taken
 
-- Logged-in hours
-- Break minutes
-- Calls taken so far
+Required pace =
+    Remaining calls / Remaining net hours
+```
 
-**Calculates:**
+## Tech Stack
 
-- Net worked hours
-- Remaining net hours
-- Remaining calls
-- Required calls per hour
+* HTML5
+* CSS3
+* Vanilla JavaScript
 
-- Smart number parsing (supports `4.5` and `4,5`)
-- Input validation with clear error handling
-- Target exceeded mode (bonus mode 🚀)
-- Fully client-side (no backend required)
+No frameworks, external libraries, or build tools are required.
 
----
+## Project Structure
 
-## 🧮 Core Logic
+```text
+web/
+├── index.html
+├── images/
+└── README.md
+```
 
-**Constants:**
-
-- Daily target: `200 calls`
-- Daily net working time: `8.5 hours`
-
-**Calculation rules:**
-
-Net worked hours = Login hours − (Break minutes / 60)  
-Remaining net hours = Daily net hours − Net worked hours  
-Remaining calls = Daily target − Calls taken  
-Required pace = Remaining calls / Remaining net hours  
-
-**Edge cases handled:**
-
-- Target exceeded
-- Remaining time = 0
-- Invalid input
-
----
-
-<h2>🖼️ Application Screenshot</h2>
+## Application Screenshot
 
 <p align="center">
-  <img src="images/screenshot.png" alt="Call Target Calculator Web Version Screenshot" width="900" />
+  <img src="images/screenshot.png" alt="Call Target Calculator Web Screenshot" width="900" />
   <br/>
-  <em>Call Target Calculator — Web Version (HTML / JavaScript)</em>
+  <em>Call Target Calculator — Web Version</em>
 </p>
 
+## Purpose
 
----
+The goal of this implementation was to take the same calculation logic used in the earlier versions and adapt it to a browser-based interface.
 
-## 🛠 Tech Stack
+This version provided practice with:
 
-- HTML5
-- CSS3
-- Vanilla JavaScript
-- GitHub Pages (deployment)
+* DOM manipulation
+* Event listeners
+* Client-side validation
+* Numeric parsing
+* Browser-based user interfaces
+* Static web application structure
 
-No frameworks.  
-No external libraries.  
-No build tools.
+## Design
 
----
+The application runs entirely in the browser.
 
-## 🎯 Purpose
+The interface collects user input through HTML form controls and uses JavaScript to validate values, perform the calculation, and update the output dynamically.
 
-This project demonstrates:
+Special handling is included for:
 
-- Translating business logic across languages (Java → C# → JavaScript)
-- DOM manipulation and event-driven programming
-- Client-side validation
-- Static site deployment
-- Iterative learning mindset
+* Invalid input
+* Decimal values
+* Reaching or exceeding the target
+* Having no remaining working time
 
-This is intentionally a learning-focused project, not a production-grade system.
+## What I Learned
 
----
+Through this implementation I practiced:
 
-## 📚 What I Practiced
+* Connecting HTML elements to JavaScript logic
+* Working with `addEventListener`
+* Parsing and validating numeric input
+* Updating the DOM dynamically
+* Handling user interaction in the browser
+* Translating existing Java and C# logic into JavaScript
+* Structuring a small static web application
 
-- Event listeners (`addEventListener`)
-- Input validation patterns
-- Numeric parsing edge cases
-- UI structuring with CSS Grid
-- Deploying static sites via GitHub Pages
-- Maintaining consistent logic across platforms
+## Current Limitations
 
----
+The application intentionally keeps the calculation model simple.
 
-## 🔮 Possible Improvements
+Current limitations include:
 
-- Make daily targets configurable
-- Add localStorage persistence
-- Add dark mode
-- Extract calculation logic into a separate JS module
-- Add automated testing (Jest)
-- Convert to React / Next.js version
+* Fixed daily target
+* Fixed daily net working hours
+* No persistent settings
+* HTML, CSS, and JavaScript are currently kept in a single file
+* No automated tests
 
----
+## Possible Improvements
 
-## ✅ Why This Project Matters
+Future improvements could include:
 
-Although simple, this project represents:
+* Make the daily target configurable
+* Make shift length configurable
+* Split HTML, CSS, and JavaScript into separate files
+* Add localStorage support
+* Add automated tests
+* Improve responsive layout
+* Add optional themes or dark mode
 
-- Multi-platform implementation
-- Clean logic separation
-- Deployment knowledge
-- Progressive learning approach
+## Other Implementations
 
-It demonstrates growth from console applications to desktop GUI and finally to browser-based applications.
+This project is also implemented as:
+
+* **Java Console** — [`../java-console`](../java-console)
+* **C# WinForms** — [`../csharp-winforms`](../csharp-winforms)
+
+All implementations are maintained together in the main **Call Target Calculator** repository.
