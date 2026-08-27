@@ -98,11 +98,7 @@ The implementations also handle basic edge cases such as reaching or exceeding t
 
 ## Java Console
 
-Location:
-
-```text
-java-console/
-```
+Location: [`java-console/`](java-console/)
 
 The original implementation of the project.
 
@@ -119,11 +115,7 @@ java -cp java-console/src CallTargetCalculator
 
 ## C# WinForms
 
-Location:
-
-```text
-csharp-winforms/
-```
+Location: [`csharp-winforms/`](csharp-winforms/)
 
 The desktop GUI implementation built with C# and Windows Forms.
 
@@ -135,19 +127,9 @@ This version adapts the original calculation logic to an event-driven graphical 
 * .NET
 * Windows Forms
 
-The solution can be opened using:
-
-```text
-csharp-winforms/CallTargetCalculatorGUI.slnx
-```
-
 ## Web Version
 
-Location:
-
-```text
-web/
-```
+Location: [`web/`](web/)
 
 The browser-based implementation built with:
 
